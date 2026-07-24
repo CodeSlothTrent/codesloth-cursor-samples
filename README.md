@@ -8,7 +8,7 @@ Each sample lives in its own project folder with a local `.cursor/` tree so you 
 
 | Folder | Blog post | Skill |
 |--------|-----------|--------|
-| [`team-brain-intro/`](team-brain-intro/) | [Building a Team Brain Skill in Cursor](https://codesloth.blog/building-a-team-brain-skill-in-cursor/) | `team-brain-intro` |
+| [`team-brain-intro/`](team-brain-intro/) | [Building Scalable Skills for Agentic Workflows](https://codesloth.blog/building-scalable-skills-for-agentic-workflows/) | `team-brain-intro` |
 
 ## How to try a sample
 

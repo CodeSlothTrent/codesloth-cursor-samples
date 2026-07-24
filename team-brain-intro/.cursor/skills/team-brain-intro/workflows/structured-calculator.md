@@ -23,8 +23,11 @@ A deliberately naive calculator path so intent classification is easy to see in 
 
 ## Output shape (required)
 
-When evaluation succeeds, output exactly this fenced block (fill the fields):
+When evaluation succeeds, reply with a single markdown **plaintext** code fence. The fence language tag must be `text`. Put each field on its **own line**. Never put `=== END_STRUCTURED_CALCULATION ===` on the same line as a step.
 
+Exact shape (fill the fields):
+
+````markdown
 ```text
 === STRUCTURED_CALCULATION ===
 expression: <normalized expression>
@@ -34,11 +37,27 @@ steps:
   - <short step 2>
 === END_STRUCTURED_CALCULATION ===
 ```
+````
+
+Example for `(12 + 8) * 3`:
+
+````markdown
+```text
+=== STRUCTURED_CALCULATION ===
+expression: (12 + 8) * 3
+result: 60
+steps:
+  - 12 + 8 = 20
+  - 20 * 3 = 60
+=== END_STRUCTURED_CALCULATION ===
+```
+````
 
 Rules:
 
 - `expression` is the normalized math (for example `(12 + 8) * 3`).
 - `result` is the final number only (no units, no words).
-- `steps` lists intermediate evaluations in order (keep it short).
-- Do not wrap the block in markdown code fences when responding to the user - emit the `===` lines as plain text so screenshots stay obvious.
+- `steps` lists intermediate evaluations in order (keep it short). Use two spaces before each `- `.
+- **Must** use a ` ```text ` fence so chat markdown does not collapse newlines or glue the end marker onto a list item.
+- Do **not** emit the envelope as bare plain text outside a fence.
 - Do not add a Sources section. Do not load anything under `references/`. Do not consult reference routing.
