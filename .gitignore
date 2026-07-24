@@ -1,0 +1,7 @@
+# Ignore OS noise; keep sample skills portable
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.log
