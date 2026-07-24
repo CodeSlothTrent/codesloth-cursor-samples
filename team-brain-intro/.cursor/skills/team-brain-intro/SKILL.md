@@ -11,21 +11,24 @@ disable-model-invocation: true
 
 # Team Brain Intro
 
-Classify intent. Announce it. Load **only** the workflow (and references) that intent needs.
+Classify intent. Announce it. Always load the shared communication standard. Then load **only** the workflow (and optional references) that intent needs.
 
-This top-level file has **no domain business logic**. It is the intent classification layer and the maintenance contract for growing the skill later.
+This top-level file has **no domain business logic**. It is the intent classification layer, the place that **forces shared context** every run must see, and the maintenance contract for growing the skill later.
 
 ## Progressive disclosure
 
-Do **not** preload every workflow or reference file.
+Do **not** preload every workflow or reference file. Do **force-load** the small shared standard below - that is intentional context, not bloat.
 
 1. Classify the user prompt against the **workflow routing** table.
 2. Announce the classified intent with the invariant prefix below.
-3. Read and follow **only** the linked workflow for that intent.
-4. If the intent is `reference-answer`, use the **reference routing** table to decide which reference file(s) to open - load only matching rows.
-5. Never put presentation rules (answer shape, tone, section order) in reference files. Those belong in workflow definitions.
+3. **Always** read [standards/technical-communication.md](standards/technical-communication.md) before you write the rest of the reply. Every workflow inherits this.
+4. Read and follow **only** the linked workflow for that intent.
+5. Load reference files only when the **active workflow** says to - usually via the **reference routing** table (match rows, open those files). Do not preload `references/`.
+6. Never put presentation rules (answer shape, tone, section order) in reference files. Those belong in workflow definitions. Cross-cutting writing standards belong in `standards/` and are loaded from this file.
 
-Skills beat dumping everything into always-on rules or mega-commands because the agent can keep context small until a path is chosen.
+Skills beat dumping everything into always-on rules or mega-commands because the agent can keep topic context small until a path is chosen - while still guaranteeing a few standards that must never be skipped.
+
+References are **composable**. Any workflow may load one or more reference files when a step needs domain facts. `reference-answer` is the workflow that exists mainly to select references and present a sourced answer; other workflows can still pull the same building blocks mid-procedure. This intro’s `structured-calculator` simply chooses not to.
 
 ## Intent announcement (invariant)
 
@@ -38,6 +41,14 @@ Intent identified: <intent-id>
 Where `<intent-id>` is one of the `Intent id` values from the workflow routing table (for example `reference-answer` or `structured-calculator`).
 
 Do not paraphrase this line. Do not add markdown bold around it. A blank line may follow, then the workflow output.
+
+## Always-on standards
+
+These files load on **every** invocation after the intent announcement. Keep this list short - forced context is a budget you spend on purpose.
+
+| Standard | Why it is forced | Load |
+|----------|------------------|------|
+| Technical language and communication | Keep replies concise for humans who overload on long agent output; STE-inspired discipline ([ASD-STE100](https://www.asd-ste100.org/about_STE.html)) | [standards/technical-communication.md](standards/technical-communication.md) |
 
 ## Workflow routing
 
@@ -57,7 +68,9 @@ Pick **one** workflow. This table is only about *what procedure to run*, not whi
 
 ## Reference routing
 
-Use this table **only after** `Intent identified: reference-answer`. Each row is enough for the agent to decide whether that file should be loaded for the current question. Load **every** matching row; load **none** that do not match.
+Catalogue of knowledge files this brain can open. **Any** workflow may use these rows when it needs domain context. The `reference-answer` workflow always does; others opt in from their own steps.
+
+Each row is enough for the agent to decide whether that file should be loaded for the current question. Load **every** matching row the workflow asked you to consider; load **none** that do not match.
 
 | Topic id | Include when the question is about… | Load |
 |----------|--------------------------------------|------|
@@ -77,8 +90,9 @@ Use this table **only after** `Intent identified: reference-answer`. Each row is
 
 | Path | Purpose |
 |------|---------|
-| [workflows/](workflows/) | Procedures **and presentation** (how to respond) for one classified intent |
-| [references/](references/) | Topic **facts and links only** - no answer templates, no output shape |
+| [standards/](standards/) | Small always-on context forced by this `SKILL.md` (cross-cutting writing / safety / team norms) |
+| [workflows/](workflows/) | Procedures **and presentation** (how to respond) for one classified intent. May load references when needed. |
+| [references/](references/) | Composable topic **facts and links only** - no answer templates, no output shape. Reusable across workflows. |
 
 ## How to extend this skill later
 
@@ -87,6 +101,7 @@ When you (or an agent) add capabilities, keep this file as a thin router:
 1. **Add a workflow** under `workflows/<intent-id>.md` with the full procedure **and** any presentation / output shape.
 2. **Add a row** to **workflow routing** with a stable `intent-id`, clear triggers, and a relative link to that workflow.
 3. **For knowledge topics**, add a file under `references/` (facts + links only) and a row in **reference routing** with clear include-when triggers.
-4. **Keep announcements** as `Intent identified: <intent-id>` so demos and evals can assert on the prefix.
+4. **For cross-cutting norms** every path must obey, add a short file under `standards/` and a row in **Always-on standards**. Keep that list tiny.
+5. **Keep announcements** as `Intent identified: <intent-id>` so demos and evals can assert on the prefix.
 
-Do not grow this `SKILL.md` into domain procedures or answer templates. Put procedures and presentation in workflows; put facts in references.
+Do not grow this `SKILL.md` into domain procedures or answer templates. Put procedures and path-specific presentation in workflows; put facts in references; put forced shared norms in standards.

@@ -12,8 +12,8 @@ Do not repeat that line here.
 
 ## Separation of concerns
 
-- **Reference files** hold facts and canonical links only.
-- **This workflow** holds presentation: how to select sources, how to shape the reply, and what to do when nothing matches.
+- **Reference files** hold facts and canonical links only. They are composable - other workflows may load the same files when a step needs that context.
+- **This workflow** holds presentation for the knowledge Q&A path: how to select sources, how to shape the reply, and what to do when nothing matches.
 - Use the parent skill’s **reference routing** table to choose files - do not invent your own index, and do not open every file under `references/`.
 
 ## Steps
