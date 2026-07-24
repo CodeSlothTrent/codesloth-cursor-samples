@@ -67,6 +67,5 @@ When you (or an agent) add capabilities, keep this file as a thin router:
 2. **Add a row** to the routing table with a stable `intent-id`, clear triggers, and a relative link to that workflow.
 3. **Optionally add references** under `references/` and link them from the workflow (not from this router), so unrelated intents never load them.
 4. **Keep announcements** as `Intent identified: <intent-id>` so demos and evals can assert on the prefix.
-5. Prefer **new versioned sample folders** in the parent repo (for example `team-brain-jira/`) for blog posts that introduce major new capabilities, so older posts still point at a simple starting point.
 
 Do not grow this `SKILL.md` into a dump of domain procedures. Put procedures in workflows; put facts in references.
