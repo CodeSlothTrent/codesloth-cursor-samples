@@ -1,0 +1,6 @@
+Intent identified: reference-answer
+
+Harbor is a framework for evaluating and optimizing AI agents in container environments. It grew out of lessons from Terminal-Bench and focuses on modular tasks, environments, and agents.
+
+- Tasks ship with instruction.md, a Dockerfile sandbox, and a verifier that writes a reward.
+- Use it to assert skill behavior (for example an intent announcement prefix) reproducibly.

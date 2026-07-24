@@ -1,0 +1,41 @@
+# Example volume-mount oriented compose for Harbor-style sandboxes.
+#
+# Harbor often builds from environment/Dockerfile alone. Use compose when you
+# need sidecars or host mounts (large fixtures, read-only skill trees, secrets
+# injected at runtime — never commit secret values).
+#
+# Comments only — adapt service names to match your Harbor / local workflow.
+# When Harbor uses compose, the agent typically runs in the `main` service.
+
+services:
+  main:
+    build:
+      context: ./base-image
+      dockerfile: Dockerfile
+    working_dir: /app
+    # Host mounts: bind large or private trees without baking them into the image.
+    volumes:
+      # Agent / verifier log dirs Harbor expects
+      - agent-logs:/logs/agent
+      - verifier-logs:/logs/verifier
+      # Example: mount a local skill checkout read-only into the sandbox
+      # - ../../team-brain-intro/.cursor/skills/team-brain-intro:/opt/skills/team-brain-intro:ro
+      # Example: mount task fixtures from the host for faster iteration
+      # - ./sibling-task-a/fixtures:/app/fixtures:ro
+    environment:
+      # Pass through keys from the host env at run time — do not hard-code values.
+      # OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      CODESLOTH_HARBOR_BASE: "1"
+    stdin_open: true
+    tty: true
+
+  # Optional sidecar (database, mock API, etc.)
+  # fixtures-sidecar:
+  #   image: nginx:alpine
+  #   volumes:
+  #     - ./sibling-task-a/fixtures:/usr/share/nginx/html:ro
+
+volumes:
+  agent-logs:
+  verifier-logs:

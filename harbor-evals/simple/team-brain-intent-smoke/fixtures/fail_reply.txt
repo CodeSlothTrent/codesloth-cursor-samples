@@ -1,0 +1,3 @@
+Harbor evaluates agents in Docker. Here is a long answer without the required intent line.
+
+This fixture must fail the verifier: missing `Intent identified: reference-answer`.

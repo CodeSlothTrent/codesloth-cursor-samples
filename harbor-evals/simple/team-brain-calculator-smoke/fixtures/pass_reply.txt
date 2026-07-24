@@ -1,0 +1,11 @@
+Intent identified: structured-calculator
+
+```text
+=== STRUCTURED_CALCULATION ===
+expression: (12 + 8) * 3
+result: 60
+steps:
+  - 12 + 8 = 20
+  - 20 * 3 = 60
+=== END_STRUCTURED_CALCULATION ===
+```
