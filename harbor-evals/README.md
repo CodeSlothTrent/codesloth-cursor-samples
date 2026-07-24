@@ -6,7 +6,7 @@ Companion tasks for the Code Sloth Harbor / agent-eval series. They follow the [
 
 | Part | Focus | Samples here |
 |------|--------|----------------|
-| **2–3** | First working tasks; intent-prefix smoke checks | [`simple/`](simple/) |
+| **2–3** | First working tasks; intent-prefix checks | [`simple/`](simple/) |
 | **4** | Shared base images, sibling tasks, codegen, compose mounts | [`advanced/`](advanced/) |
 | **5** | Orchestration / multi-run workflows | Prefer your own harness or CI; leave `harbor run` for per-task trials (see [`advanced/README.md`](advanced/README.md)) |
 
@@ -18,8 +18,8 @@ These folders are **educational samples**, not a published Harbor dataset. Point
 harbor-evals/
   README.md                 # this file
   simple/                   # Parts 2–3 — cheap, runnable-shaped tasks
-    team-brain-intent-smoke/
-    team-brain-calculator-smoke/
+    team-brain-intent/
+    team-brain-calculator/
   advanced/                 # Part 4 — patterns (may need your own repos)
     base-image/
     sibling-task-a/
@@ -47,10 +47,10 @@ Requires [Harbor](https://github.com/laude-institute/harbor) and Docker.
 cd harbor-evals
 
 # Oracle / reference solution (no LLM) — good verifier sanity check
-harbor tasks test simple/team-brain-intent-smoke --solution
+harbor tasks test simple/team-brain-intent --solution
 
 # Agent trial (example; agent and model flags vary by Harbor version)
-harbor run --path simple/team-brain-intent-smoke --agent <your-agent> --model <provider/model>
+harbor run --path simple/team-brain-intent --agent <your-agent> --model <provider/model>
 ```
 
 Smoke the verifier **without** Harbor by copying a fixture into place and running `test.sh` inside a built image (see each task’s `fixtures/` and `solution/`).

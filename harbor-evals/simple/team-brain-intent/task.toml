@@ -5,7 +5,7 @@ author_name = "Code Sloth"
 author_email = "hello@codesloth.blog"
 difficulty = "easy"
 category = "skill-eval"
-tags = ["team-brain", "intent", "smoke", "structured-calculator"]
+tags = ["team-brain", "intent", "reference-answer"]
 
 [verifier]
 timeout_sec = 60.0

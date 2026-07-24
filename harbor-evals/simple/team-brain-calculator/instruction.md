@@ -1,4 +1,4 @@
-# Team Brain intent smoke (structured-calculator)
+# Team Brain intent eval (structured-calculator)
 
 Simulate a **Team Brain intro** calculator-path reply. You do **not** need the real skill files; produce a reply that obeys the intent invariant and a minimal structured calculation shape.
 

@@ -1,4 +1,4 @@
-# Team Brain intent smoke (reference-answer)
+# Team Brain intent eval (reference-answer)
 
 Simulate a **Team Brain intro** style reply for the user question below. You do **not** need the real skill files in this container; produce a plausible reply that obeys the intent invariant.
 

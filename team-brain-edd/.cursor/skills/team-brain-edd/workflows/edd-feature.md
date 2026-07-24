@@ -96,7 +96,7 @@ Then proceed to Phase B.
    - Required substrings / structured envelopes
    - Existence and content of the agreed **artifact path**
 
-6. If the brief chose LLM-as-judge, document the rubric in `tests/` and keep at least one cheap deterministic smoke check (for example “intent line present”) when possible.
+6. If the brief chose LLM-as-judge, document the rubric in `tests/` and keep at least one cheap deterministic check (for example “intent line present”) when possible.
 
 7. Tell the human the task path and what will be asserted. Do not start the loop until the task files exist on disk.
 
