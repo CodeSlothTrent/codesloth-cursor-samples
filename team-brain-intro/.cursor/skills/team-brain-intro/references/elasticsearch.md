@@ -33,9 +33,3 @@ Thin tribal cache for Elasticsearch questions. Prefer these summaries, then foll
 | Elasticsearch on Windows | https://codesloth.blog/installing-elasticsearch-and-running-on-windows/ |
 | Elasticsearch in Docker | https://codesloth.blog/elasticsearch-docker-tutorial/ |
 | Elasticsearch GUI / Head extension | https://codesloth.blog/elasticsearch-gui-tutorial/ · https://codesloth.blog/tutorial-elasticsearch-head-chrome-extension-deep-dive/ |
-
-## Answering guidance
-
-- For keyword vs text questions, lead with the token / analysis distinction and point at the keyword deep dive.
-- For “should I use ES or OpenSearch?”, use the comparison post; do not invent a one-sided recommendation.
-- If the user asks about OpenSearch-specific APIs, also load [opensearch.md](opensearch.md).

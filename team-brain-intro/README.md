@@ -8,8 +8,10 @@ Open **this folder** as a Cursor project so the skill at `.cursor/skills/team-br
 
 | Intent id | When to use |
 |-----------|-------------|
-| `reference-answer` | Knowledge questions answered from `references/` |
+| `reference-answer` | Knowledge questions answered from `references/` (see reference routing in `SKILL.md`) |
 | `structured-calculator` | Arithmetic / expression requests with a fixed result block |
+
+`SKILL.md` keeps **workflow routing** (which procedure to run) separate from **reference routing** (which knowledge files to open for `reference-answer`). Reference files are facts/links only; presentation lives in workflows.
 
 ## Try it
 

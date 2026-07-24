@@ -42,9 +42,3 @@ Thin tribal cache for OpenSearch questions. Prefer these summaries, then follow 
 | Troubleshooting OpenSearch HTTP | https://codesloth.blog/troubleshooting-opensearch-http/ |
 | Too many nested clauses | https://codesloth.blog/troubleshooting-too-many-nested-clauses/ |
 | OpenSearch vs Elasticsearch | https://codesloth.blog/opensearch-vs-elasticsearch-deciding-which-is-best/ |
-
-## Answering guidance
-
-- Prefer OpenSearch doc URLs when the user said OpenSearch; prefer Elastic URLs when they said Elasticsearch; load both files when they ask about differences.
-- For flat vs nested modeling questions, point at the flat object / flattened posts and call out the naming difference vs Elasticsearch.
-- Route search-engine choice questions to the comparison post rather than re-litigating the fork history at length.
