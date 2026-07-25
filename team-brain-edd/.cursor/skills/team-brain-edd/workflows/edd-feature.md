@@ -122,7 +122,7 @@ while iteration < 5:
   5. If fail: decide whether the skill is wrong, the tests are wrong, or both.
      - Fix skill when behaviour misses the brief.
      - Fix tests only when tests disagree with the agreed brief (flaky path, wrong string, over-strict assert).
-     - Do not weaken tests just to get green.
+     - Do not weaken tests just to get a pass.
   6. Continue until pass or iteration == 5.
 ```
 

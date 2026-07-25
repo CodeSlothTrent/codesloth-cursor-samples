@@ -3,7 +3,7 @@ name: team-brain-edd
 description: >-
   Eval-driven development for Team Brain: interview for eval criteria, write a
   Harbor task under harbor-evals/simple, then loop skill changes against the
-  eval (max 5) until green. Use when the user invokes /team-brain-edd or asks
+  eval (max 5) until it passes. Use when the user invokes /team-brain-edd or asks
   to add a Team Brain feature via EDD / Harbor eval loop.
 disable-model-invocation: true
 ---
@@ -95,7 +95,7 @@ Before starting the repair loop, verify:
 4. `../team-brain-intro/` exists (or the user-supplied working-copy path).
 5. `../harbor-evals/simple/` exists or can be created as an empty suite parent.
 
-If any gate fails: finish the interview and optionally draft task files, then **stop**. Report what is missing. Do not pretend a green eval.
+If any gate fails: finish the interview and optionally draft task files, then **stop**. Report what is missing. Do not pretend a passing eval.
 
 ## Layout
 

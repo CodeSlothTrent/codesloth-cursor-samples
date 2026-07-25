@@ -42,7 +42,7 @@ The first line of the reply should be:
 Intent identified: edd-feature
 ```
 
-Then the agent interviews you, scaffolds a task under `../harbor-evals/simple/`, and iterates on `../team-brain-intro/` until the eval is green or five attempts are used.
+Then the agent interviews you, scaffolds a task under `../harbor-evals/simple/`, and iterates on `../team-brain-intro/` until the eval passes or five attempts are used.
 
 ## Series posts (slug paths)
 
