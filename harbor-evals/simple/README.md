@@ -12,3 +12,5 @@ Intent identified: <intent-id>
 | [`team-brain-calculator/`](team-brain-calculator/) | `structured-calculator` | `/app/output/reply.txt` |
 
 Each task includes `fixtures/pass_reply.txt` and `fixtures/fail_reply.txt` so you can sanity-check the verifier without an LLM.
+
+`instruction.md` stays neutral: use the skill, answer the user message, write the user-facing reply to `/app/output/reply.txt`. Expected intent strings live in the verifier and fixtures - do not leak them into the agent-facing instruction.

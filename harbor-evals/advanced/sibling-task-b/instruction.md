@@ -1,15 +1,11 @@
-# Sibling task B — pattern demo (needs codesloth-harbor-base:local)
+# Sibling task B (needs codesloth-harbor-base:local)
 
-Same base image as sibling-task-a; different instruction / verifier.
+Use the Team Brain skill with the user message below.
 
-Write a Team Brain calculator-style reply for:
+Write everything you would show the user to `/app/output/reply.txt` (create `/app/output/` if it does not exist). Do not only print to stdout.
+
+## User message
 
 > What is 7 * 8?
 
-## Requirements
-
-1. Full reply → `/app/output/reply.txt`
-2. First line exactly: `Intent identified: structured-calculator`
-3. Include `result: 56` somewhere in the file
-
-Build `codesloth-harbor-base:local` first (see `../README.md`).
+Same base image as sibling-task-a; different verifier. Build `codesloth-harbor-base:local` first (see `../README.md`).
