@@ -8,7 +8,7 @@ Companion tasks for the Code Sloth Harbor / agent-eval series. They follow the [
 |------|--------|----------------|
 | **2–3** | First working tasks; intent-prefix checks | [`simple/`](simple/) |
 | **4** | Shared base images, sibling tasks, codegen, compose mounts | [`advanced/`](advanced/) |
-| **5** | Orchestration / multi-run workflows | Prefer your own harness or CI; leave `harbor run` for per-task trials (see [`advanced/README.md`](advanced/README.md)) |
+| **5** | Orchestration / multi-run workflows | [`scripts/run_matrix.sh`](scripts/run_matrix.sh) - desired state (base image, snippets) then `harbor run` |
 
 These folders are **educational samples**, not a published Harbor dataset. Point `harbor run --path` at a single task directory (or a parent that contains only task dirs) when you try them.
 
@@ -17,6 +17,8 @@ These folders are **educational samples**, not a published Harbor dataset. Point
 ```text
 harbor-evals/
   README.md                 # this file
+  scripts/
+    run_matrix.sh           # Part 5 - prerequisites, base image, task × model runs
   simple/                   # Parts 2–3 — cheap, runnable-shaped tasks
     team-brain-intent/
     team-brain-calculator/
@@ -55,9 +57,19 @@ harbor run --path simple/team-brain-intent --agent <your-agent> --model <provide
 
 Smoke the verifier **without** Harbor by copying a fixture into place and running `test.sh` inside a built image (see each task’s `fixtures/` and `solution/`).
 
-### Advanced samples
+### Advanced samples and the matrix script
 
 Build notes and compose mounts live under [`advanced/`](advanced/). Sibling tasks expect a shared base image tag documented there; regenerate shared snippets with `advanced/scripts/generate_common.sh`.
+
+For a full local run (including building that base image), use [`scripts/run_matrix.sh`](scripts/run_matrix.sh) instead of remembering ad-hoc `docker build` steps:
+
+```bash
+export CURSOR_API_KEY=...
+export SKILL_DIR=/absolute/path/to/.cursor/skills/team-brain-intro
+./scripts/run_matrix.sh
+```
+
+Set `INCLUDE_ADVANCED=0` to run only the simple tasks through the same entry point.
 
 ## API key warning
 

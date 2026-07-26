@@ -2,10 +2,16 @@
 #
 # Harbor often builds from environment/Dockerfile alone. Use compose when you
 # need sidecars or host mounts (large fixtures, read-only skill trees, secrets
-# injected at runtime — never commit secret values).
+# injected at runtime - never commit secret values).
 #
-# Comments only — adapt service names to match your Harbor / local workflow.
+# Comments only - adapt service names to match your Harbor / local workflow.
 # When Harbor uses compose, the agent typically runs in the `main` service.
+#
+# Mount the skill, not the answer sheet: bind only the skill directory (or
+# COPY that subtree into the image). Do not mount a whole samples/task repo
+# that also holds fixtures/, tests/, or expected intent strings where the
+# agent can read them. For agent-native injection at run time, prefer
+# `harbor run --skill <skill-dir>` (repeatable) instead of a broad mount.
 
 services:
   main:
@@ -19,11 +25,13 @@ services:
       - agent-logs:/logs/agent
       - verifier-logs:/logs/verifier
       # Example: mount a local skill checkout read-only into the sandbox
+      # (skill dir only - not the harbor-evals task tree beside it)
       # - ../../team-brain-intro/.cursor/skills/team-brain-intro:/opt/skills/team-brain-intro:ro
-      # Example: mount task fixtures from the host for faster iteration
+      # Example: host fixtures for verifier-side iteration - keep these off
+      # paths the agent can list/open during the trial
       # - ./sibling-task-a/fixtures:/app/fixtures:ro
     environment:
-      # Pass through keys from the host env at run time — do not hard-code values.
+      # Pass through keys from the host env at run time - do not hard-code values.
       # OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       # ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       CODESLOTH_HARBOR_BASE: "1"

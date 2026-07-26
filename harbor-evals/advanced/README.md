@@ -13,8 +13,9 @@ Move **outside** Harbor when you need:
 | Concern | Prefer |
 |---------|--------|
 | Sweeping many tasks × models × seeds | Your script / CI matrix calling Harbor (or a job queue) |
-| Sharing one expensive clone across tasks | Pre-built base image + sibling `FROM` (this folder) |
+| Sharing one expensive clone across tasks | Pre-built base image + sibling `FROM` (this folder); build it from `../scripts/run_matrix.sh` |
 | Mounting host secrets / large corpora | Compose volumes or CI workspace mounts (see `docker-compose.yaml`) |
+| Injecting skill dirs for agents at run time | `harbor run --skill <skill-dir>` (repeatable); see Part 5 / `../scripts/run_matrix.sh` |
 | Aggregating scores, flakiness, dashboards | Post-process Harbor logs / reward files in your own pipeline |
 | Cross-repo fixtures | Checkout + codegen (`scripts/generate_common.sh`) before Harbor |
 
@@ -25,19 +26,25 @@ Rule of thumb: Harbor owns the **per-task sandbox contract**; you own **portfoli
 ```text
 advanced/
   README.md                 # this file
-  base-image/Dockerfile     # shallow-clone style base (notes in comments)
+  base-image/Dockerfile     # SHA-pinned shallow-clone style base (notes in comments)
   sibling-task-a/           # FROM codesloth-harbor-base:local
   sibling-task-b/
   scripts/generate_common.sh
-  docker-compose.yaml       # volume-mount oriented example (comments)
+  docker-compose.yaml       # volume mounts; skill dir only, not fixtures/tests
 ```
+
+Mount or `COPY` only the skill subtree into the agent sandbox. Pass/fail fixtures and verifier asserts are the answer sheet - keep them off paths the agent can read. For agent-native injection without a custom mount path, use `harbor run --skill` (Part 5).
 
 ## Build the shared base (local)
 
 ```bash
 cd harbor-evals/advanced/base-image
 docker build -t codesloth-harbor-base:local .
+# When using the commented clone block, pin the tree explicitly:
+# docker build -t codesloth-harbor-base:local --build-arg REPO_SHA=<full-commit-sha> .
 ```
+
+Same commit SHA keeps the clone layer cacheable; bump the SHA when you want a new tree.
 
 Then build a sibling task environment context (Harbor normally builds `environment/` for you):
 
