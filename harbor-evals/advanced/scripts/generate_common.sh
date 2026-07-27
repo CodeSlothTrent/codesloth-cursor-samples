@@ -7,7 +7,25 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TEMPLATE_TOML="${ROOT}/scripts/templates/task.toml.common"
 DOCKER_SNIPPET="${ROOT}/scripts/templates/Dockerfile.from-base.snippet"
 
-TASKS=(sibling-task-a sibling-task-b)
+# Sibling task dirs = immediate children of advanced/ that contain task.toml
+# (skips base-image/, scripts/, and other helpers).
+TASKS=()
+shopt -s nullglob
+for d in "${ROOT}"/*/; do
+  if [[ -f "${d}task.toml" ]]; then
+    TASKS+=("$(basename "${d%/}")")
+  fi
+done
+shopt -u nullglob
+
+if ((${#TASKS[@]} == 0)); then
+  echo "No sibling tasks found under ${ROOT} (expected */task.toml)." >&2
+  exit 1
+fi
+
+# Stable order for reproducible codegen.
+IFS=$'\n' TASKS=($(printf '%s\n' "${TASKS[@]}" | LC_ALL=C sort))
+unset IFS
 
 if [[ ! -f "${TEMPLATE_TOML}" ]]; then
   echo "missing template: ${TEMPLATE_TOML}" >&2

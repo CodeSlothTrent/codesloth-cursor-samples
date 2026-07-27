@@ -57,11 +57,37 @@ if [[ ! -d "${SKILL_DIR}" ]]; then
   exit 1
 fi
 
+# Collect Harbor task dirs under a parent (immediate children that contain task.toml).
+# Skips helpers like advanced/base-image and advanced/scripts automatically.
+discover_tasks() {
+  local parent="$1"
+  local d
+  local -a found=()
+  shopt -s nullglob
+  for d in "${parent}"/*/; do
+    if [[ -f "${d}task.toml" ]]; then
+      found+=("${d%/}")
+    fi
+  done
+  shopt -u nullglob
+  if ((${#found[@]} == 0)); then
+    return 0
+  fi
+  # Stable order so matrix runs are reproducible across machines.
+  printf '%s\n' "${found[@]}" | LC_ALL=C sort
+}
+
 # Task directories Harbor will run (each must contain task.toml, instruction.md, etc.).
-TASKS=(
-  "$ROOT/simple/team-brain-intent"
-  "$ROOT/simple/team-brain-calculator"
-)
+TASKS=()
+while IFS= read -r task; do
+  [[ -n "$task" ]] || continue
+  TASKS+=("$task")
+done < <(discover_tasks "$ROOT/simple")
+
+if ((${#TASKS[@]} == 0)); then
+  echo "No simple tasks found under ${ROOT}/simple (expected */task.toml)." >&2
+  exit 1
+fi
 
 if [[ "${INCLUDE_ADVANCED}" == "1" ]]; then
   echo "== Desired state: advanced shared snippets + base image =="
@@ -72,14 +98,14 @@ if [[ "${INCLUDE_ADVANCED}" == "1" ]]; then
   # Build (or rebuild) the shared base image siblings expect via FROM.
   # -t names the image; the path is the build context (folder with the Dockerfile).
   docker build -t "${BASE_TAG}" "$ROOT/advanced/base-image"
-  # Append advanced sibling tasks now that the base tag exists.
-  TASKS+=(
-    "$ROOT/advanced/sibling-task-a"
-    "$ROOT/advanced/sibling-task-b"
-  )
+  # Append every advanced sibling that looks like a Harbor task.
+  while IFS= read -r task; do
+    [[ -n "$task" ]] || continue
+    TASKS+=("$task")
+  done < <(discover_tasks "$ROOT/advanced")
 fi
 
-echo "== Harbor trials =="
+echo "== Harbor trials (${#TASKS[@]} task(s)) =="
 for model in "${MODELS[@]}"; do
   for task in "${TASKS[@]}"; do
     echo "=== $(basename "$task") @ ${model} ==="
