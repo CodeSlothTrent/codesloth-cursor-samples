@@ -9,6 +9,7 @@ Each sample lives in its own project folder with a local `.cursor/` tree so you 
 | Folder | Blog post | Skill |
 |--------|-----------|--------|
 | [`team-brain-intro/`](team-brain-intro/) | [Building Scalable Skills for Agentic Workflows](https://codesloth.blog/building-scalable-skills-for-agentic-workflows/) | `team-brain-intro` |
+| [`team-brain-langgraph/`](team-brain-langgraph/) | Sequel sample to the Team Brain intro (README in the folder; post later) | `team-brain-langgraph` |
 | [`harbor-evals/`](harbor-evals/) | Harbor agent-eval series (Parts 2–5) | Harbor task samples (`simple/`, `advanced/`) — see [`harbor-evals/README.md`](harbor-evals/README.md) |
 | [`team-brain-edd/`](team-brain-edd/) | [Harbor Evals Part 6: Eval-Driven Development](https://codesloth.blog/harbor-evals-for-agentic-skills-part-6-eval-driven-development/) | `team-brain-edd` |
 
